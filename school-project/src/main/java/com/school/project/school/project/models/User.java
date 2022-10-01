@@ -1,6 +1,20 @@
 package com.school.project.school.project.models;
 
+import javax.persistence.*;
+
+@Entity
+@Table
 public class User {
+    @Id
+    @SequenceGenerator(
+            name = "user_sequence",
+            sequenceName = "user_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "user_sequence"
+    )
     private Integer id;
     private String name;
     private String surname;
@@ -9,7 +23,9 @@ public class User {
     private String email;
 //    private SchoolRole role;
 
+
     public User(){
+
         this.id = 1;
         this.name = "Alexandru";
         this.surname = "Soare";
