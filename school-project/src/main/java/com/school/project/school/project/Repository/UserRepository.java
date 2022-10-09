@@ -1,4 +1,4 @@
-package com.school.project.school.project.Repository;
+package com.school.project.school.project.repository;
 
 import com.school.project.school.project.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,8 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-
-    // SELECT * FROM user WHERE email = ?
     Optional<User> findUserByEmail(String email);
     Optional<User> findUserById(Integer id);
 

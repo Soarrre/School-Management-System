@@ -1,48 +1,40 @@
 package com.school.project.school.project.controllers;
 
-import com.school.project.school.project.Service.UserService;
+import com.school.project.school.project.service.UserService;
 import com.school.project.school.project.models.User;
+import com.school.project.school.project.models.dto.UserUpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/user")
 public class UserController {
-
-
     private final UserService userService;
 
     @Autowired
-    public UserController (UserService userService){
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping
+    @GetMapping(produces = { "application/json" })
     public User getUser(Integer userId) {
-        return new User();
-    }
-    public List<User> getUsers() {
-        return userService.getUsers();
+        return userService.getById(userId);
     }
 
-@PostMapping
-    public void registerNewUser(@RequestBody User user){
-        userService.addNewUser(user);
+    @PostMapping(produces = { "application/json" })
+    public boolean registerNewUser(@RequestBody User user) {
+        userService.add(user);
+        return true;
     }
 
     @DeleteMapping(path = "{userId}")
-    public void deleteUser(@PathVariable("userId") Integer userId){
-        userService.deleteUser(userId);
+    public void deleteUser(@PathVariable("userId") Integer userId) {
+        userService.delete(userId);
     }
-@PutMapping(path ="{userId}")
-    public void updateUser(@PathVariable("userId") Integer userId,
-                           @RequestParam(required = false) String name,
-                           @RequestParam(required = false) String email)
-{
 
-    userService.updateUser(userId, name, email);
-}
+    @PutMapping(path = "{userId}")
+    public void updateUser(@PathVariable("userId") Integer userId, @RequestBody UserUpdateRequest request) {
+        userService.update(userId, request.name, request.email);
+    }
 
 }

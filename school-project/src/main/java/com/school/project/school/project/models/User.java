@@ -21,8 +21,8 @@ public class User {
     private String cnp;
     private String address;
     private String email;
-//    private SchoolRole role;
 
+    private SchoolRole role;
 
     public User(){
 
@@ -32,7 +32,7 @@ public class User {
         this.cnp = "123123123";
         this.address = "The Street";
         this.email = "email@email.com";
-    //    this.role = SchoolRole.Admin;
+        this.role = SchoolRole.Admin;
     }
 
     public Integer getId() {
