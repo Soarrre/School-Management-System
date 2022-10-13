@@ -1,6 +1,7 @@
 package com.school.project.school.project.service;
 
 
+import com.school.project.school.project.models.dto.UserUpdateRequest;
 import com.school.project.school.project.repository.UserRepository;
 import com.school.project.school.project.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,20 +50,22 @@ public class UserService {
     }
 
     @Transactional
-    public void update(Integer userId, String name, String email) {
+    public void update(Integer userId, UserUpdateRequest userUpdateDto) {
         User user = userRepository.findById(userId).orElseThrow(() -> new IllegalStateException("student with id" + userId + "does not exist"));
-        if (name != null && name.length() > 0 && !Objects.equals(user.getName(), name)) {
-            user.setName(name);
+        if (userUpdateDto.name != null && userUpdateDto.name.length() > 0 && !Objects.equals(user.getName(), userUpdateDto.name)) {
+            user.setName(userUpdateDto.name);
         }
-        if (email != null && email.length() > 0 && !Objects.equals(user.getEmail(), email)) {
-            Optional<User> existingUser = userRepository.findUserByEmail(email);
+        if (userUpdateDto.email != null && userUpdateDto.email.length() > 0 && !Objects.equals(user.getEmail(), userUpdateDto.email)) {
+            Optional<User> existingUser = userRepository.findUserByEmail(userUpdateDto.email);
             if(existingUser.isPresent()){
                 throw new IllegalStateException("exista acest email in sistem");
             }
             else{
-                user.setEmail(email);
+                user.setEmail(userUpdateDto.email);
             }
         }
+
+        user.setRole(userUpdateDto.role);
         userRepository.save(user);
 
     }

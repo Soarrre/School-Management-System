@@ -1,6 +1,7 @@
 package com.school.project.school.project.controllers;
 
 import com.school.project.school.project.models.Course;
+import com.school.project.school.project.models.dto.CourseInsertRequest;
 import com.school.project.school.project.models.dto.CourseUpdateRequest;
 import com.school.project.school.project.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,8 @@ public class CourseController {
     }
 
     @PostMapping(produces = {"application/json"})
-    public boolean registerNewCourse(@RequestBody Course course) {
-        courseService.add(course);
+    public boolean registerNewCourse(@RequestBody CourseInsertRequest dto) {
+        courseService.add(dto);
         return true;
     }
 
@@ -35,6 +36,6 @@ public class CourseController {
 
     @PutMapping(path = "{courseId}")
     public void updateCourse(@PathVariable("courseId") Integer courseId, @RequestBody CourseUpdateRequest request) {
-        courseService.update(courseId, request.name);
+        courseService.update(courseId, request);
     }
 }

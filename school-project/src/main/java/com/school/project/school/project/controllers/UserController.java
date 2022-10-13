@@ -34,7 +34,7 @@ public class UserController {
 
     @PutMapping(path = "{userId}")
     public void updateUser(@PathVariable("userId") Integer userId, @RequestBody UserUpdateRequest request) {
-        userService.update(userId, request.name, request.email);
+        userService.update(userId, request);
     }
 
 }

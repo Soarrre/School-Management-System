@@ -21,7 +21,6 @@ public class User {
     private String cnp;
     private String address;
     private String email;
-
     private SchoolRole role;
 
     public User(){
@@ -83,6 +82,14 @@ public class User {
         this.email = email;
     }
 
+    public SchoolRole getRole() {
+        return role;
+    }
+
+    public void setRole(SchoolRole role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -92,6 +99,9 @@ public class User {
                 ", cnp='" + cnp + '\'' +
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
+                ", ROLE='" + role + '\'' +
                 '}';
     }
+
+
 }

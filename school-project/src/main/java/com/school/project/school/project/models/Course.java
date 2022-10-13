@@ -17,9 +17,18 @@ public class Course {
     private Integer id;
     private String name;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
     public Course() {
         this.id=1;
         this.name= "Computer Science";
+    }
+
+    public Course(String name, User user){
+        this.name = name;
+        this.user = user;
     }
 
 
@@ -45,6 +54,15 @@ public class Course {
         return "Course{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", user='" + user.getName() + '\'' +
                 '}';
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
