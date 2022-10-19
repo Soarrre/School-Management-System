@@ -5,6 +5,7 @@ import com.school.project.school.project.models.dto.UserUpdateRequest;
 import com.school.project.school.project.repository.UserRepository;
 import com.school.project.school.project.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -13,6 +14,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
+
 public class UserService {
 
     private final UserRepository userRepository;

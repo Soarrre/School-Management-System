@@ -1,6 +1,7 @@
 package com.school.project.school.project.models;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table
@@ -18,32 +19,27 @@ public class Scheduler {
     )
 
     private Integer id;
-    private String startTime;
-    private String endTime;
-    @OneToOne
+    private Date startDate;
+    private Date endDate;
+    @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
-    @OneToOne
-    @JoinColumn(name = "scheduler_id")
-    private Scheduler scheduler;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public Course getCourse() {
-        return course;
-    }
 
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
-    public Scheduler(){
+    public Scheduler() {
         this.id = 1;
-        this.startTime = ora;
-        this.endTime = ora;
+        this.startDate = new Date();
+        this.endDate = new Date();
     }
-    public Scheduler(String startTime , String endTime , Scheduler course) {
+
+    public Scheduler(Date startDate, Date endDate, User user, Course course) {
         this.id = id;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.user = user;
         this.course = course;
     }
 
@@ -55,28 +51,36 @@ public class Scheduler {
         this.id = id;
     }
 
-    public String getStartTime() {
-        return startTime;
+    public Date getstartDate() {
+        return startDate;
     }
 
-    public String getEndTime() {
-        return endTime;
+    public void setstartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
+    public Date getendDate() {
+        return endDate;
     }
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
+    public void setendDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     @Override
     public String toString() {
         return "Scheduler{" +
                 "id=" + id +
-                ", startTime='" + scheduler.getStartTime() + '\'' +
-                ", endTime='" + scheduler.getEndTime() + '\'' +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
                 '}';
     }
 

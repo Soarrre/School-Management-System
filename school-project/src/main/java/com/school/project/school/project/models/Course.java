@@ -1,7 +1,7 @@
 package com.school.project.school.project.models;
 
-import com.school.project.school.project.models.Scheduler;
 import javax.persistence.*;
+
 @Table
 @Entity
 public class Course {
@@ -23,15 +23,14 @@ public class Course {
     private User user;
 
     public Course() {
-        this.id=1;
-        this.name= "Computer Science";
+        this.id = 1;
+        this.name = "Computer Science";
     }
 
-    public Course(String name, User user){
+    public Course(String name, User user) {
         this.name = name;
         this.user = user;
     }
-
 
 
     public Integer getId() {

@@ -2,16 +2,13 @@ package com.school.project.school.project.service;
 
 import com.school.project.school.project.models.Course;
 import com.school.project.school.project.models.Scheduler;
-import com.school.project.school.project.models.SchoolRole;
-import com.school.project.school.project.models.User;
-import com.school.project.school.project.models.dto.CourseInsertRequest;
 import com.school.project.school.project.models.dto.SchedulerInsertRequest;
 import com.school.project.school.project.repository.CourseRepository;
 import com.school.project.school.project.repository.SchedulerRepository;
 import com.school.project.school.project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.Objects;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -19,11 +16,13 @@ import java.util.Optional;
 public class SchedulerService {
     private final SchedulerRepository schedulerRepository;
     private final CourseRepository courseRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public SchedulerService(SchedulerRepository schedulerRepository, CourseRepository courseRepository) {
+    public SchedulerService(SchedulerRepository schedulerRepository, CourseRepository courseRepository, UserRepository userRepository) {
         this.schedulerRepository = schedulerRepository;
         this.courseRepository = courseRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Course> getAll() {
@@ -31,24 +30,21 @@ public class SchedulerService {
     }
 
     public Scheduler getById(Integer id) {
-        return schedulerRepository.findSchedulerById(id).orElse(null);
+        return schedulerRepository.findById(id).orElse(null);
     }
 
     public void add(SchedulerInsertRequest dto) {
-        Scheduler dbScheduler = schedulerRepository.findById(dto.schedulerId).orElseThrow(() -> new IllegalStateException(("nu exista acest curs")));
+        Scheduler dbScheduler = schedulerRepository.findById(dto.schedulerId).get();
 
-        Optional<Scheduler> schedulerBystartTime = schedulerRepository.findSchedulerBystartTime(dto.startTime);
-        if (schedulerBystartTime.isPresent()) {
+        if(dbScheduler != null){
+            throw new IllegalStateException(("nu exista acest curs"));
+        }
+
+        Scheduler overlappingScheduler = schedulerRepository.findByInterval(dto.startDate, dto.endDate);
+
+        if (overlappingScheduler != null) {
             throw new IllegalStateException("scheduler incepand la aceasta ora deja exista");
         }
-        Optional<Scheduler> schedulerByendTime = schedulerRepository.findSchedulerByendTime(dto.endTime);
-        if (schedulerByendTime.isPresent()) {
-            throw new IllegalStateException("scheduler sfarsind la aceasta ora deja exista");
-
-            schedulerRepository.save(new  Scheduler(dto.startTime, dto.endTime, dbScheduler));
-
-
+        //ia user, ia curs -> insert in db
     }
-
-}
 }

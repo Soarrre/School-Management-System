@@ -28,7 +28,7 @@ public class SchedulerController {
         schedulerService.add(dto);
         return true;
     }
-
+/*
     @DeleteMapping(path = "{schedulerId}")
     public void deleteScheduler(@PathVariable("schedulerId") Integer schedulerId) {
         schedulerService.delete(schedulerId);
@@ -38,5 +38,5 @@ public class SchedulerController {
     public void updateScheduler(@PathVariable("schedulerId") Integer schedulerId, @RequestBody SchedulerUpdateRequest request) {
         schedulerService.update(schedulerId, request);
     }
-
+*/
 }
