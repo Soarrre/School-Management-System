@@ -7,4 +7,6 @@ public class SchedulerInsertRequest {
     public Date startDate;
     public Date endDate;
 
+    public Integer userId;
+    public Integer courseId;
 }
