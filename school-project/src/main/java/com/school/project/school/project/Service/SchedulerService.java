@@ -30,7 +30,7 @@ public class SchedulerService {
         return courseRepository.findAll();
     }
 
-    public List<Scheduler> get() {
+    public List<Scheduler> getSchedule() {
         return schedulerRepository.findAll();
     }
 
@@ -60,15 +60,18 @@ public class SchedulerService {
         if (userById.isPresent()) {
             throw new IllegalStateException("user exista deja in scheduler");
         }
+
         Course dbCourse = courseRepository.findCourseById(dto.courseId).get();
         if (dbCourse != null) {
             throw new IllegalStateException(("exista cursuri"));
         }
         Optional<Course> courseById = courseRepository.findById(dbCourse.getId());
         throw new IllegalStateException(("curs exista deja in scheduler"));
+        //schedulerRepository.save(new Scheduler(dto.startDate, dto.endDate, dbUser, dbCourse));
+        //Scheduler scheduler = schedulerRepository.saveAll(dto.startDate, dto.endDate, dbUser, dbCourse);
     }
 
-    //  schedulerRepository.save();
+
     public void delete(Integer schedulerId) {
         schedulerRepository.findById(schedulerId);
         boolean exists = schedulerRepository.existsById(schedulerId);

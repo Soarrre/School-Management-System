@@ -9,6 +9,7 @@ import java.util.Date;
 
 @Repository
 public interface SchedulerRepository extends JpaRepository<Scheduler, Integer> {
+
     @Query("SELECT s FROM Scheduler s WHERE s.startDate = ?1")
     Scheduler findByInterval(Date startDate, Date endDate);
 }

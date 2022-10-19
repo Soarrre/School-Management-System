@@ -9,13 +9,13 @@ public class Scheduler {
 
     @Id
     @SequenceGenerator(
-            name = "course_sequence",
-            sequenceName = "course_sequence",
+            name = "scheduler_sequence",
+            sequenceName = "scheduler_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "course_sequence"
+            generator = "scheduler_sequence"
     )
 
     private Integer id;
