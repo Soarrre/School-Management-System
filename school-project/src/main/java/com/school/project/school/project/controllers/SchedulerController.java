@@ -28,15 +28,15 @@ public class SchedulerController {
         schedulerService.add(dto);
         return true;
     }
-/*
+
     @DeleteMapping(path = "{schedulerId}")
     public void deleteScheduler(@PathVariable("schedulerId") Integer schedulerId) {
         schedulerService.delete(schedulerId);
     }
-
-    @PutMapping(path = "{schedulerId}")
+  /* @PutMapping(path = "{schedulerId}")
     public void updateScheduler(@PathVariable("schedulerId") Integer schedulerId, @RequestBody SchedulerUpdateRequest request) {
         schedulerService.update(schedulerId, request);
-    }
-*/
+      }
+    */
+
 }

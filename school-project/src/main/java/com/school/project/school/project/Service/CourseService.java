@@ -40,7 +40,7 @@ public class CourseService {
         }
         Optional<Course> courseByName = courseRepository.findCourseByName(dto.name);
         if (courseByName.isPresent()) {
-            throw new IllegalStateException("email taken");
+            throw new IllegalStateException("name already registered");
         }
 
         courseRepository.save(new Course(dto.name, dbUser));
