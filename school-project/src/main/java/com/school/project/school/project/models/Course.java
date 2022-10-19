@@ -1,5 +1,6 @@
 package com.school.project.school.project.models;
 
+import com.school.project.school.project.models.Scheduler;
 import javax.persistence.*;
 @Table
 @Entity
