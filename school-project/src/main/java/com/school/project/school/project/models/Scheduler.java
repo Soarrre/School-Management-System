@@ -1,6 +1,8 @@
 package com.school.project.school.project.models;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -19,23 +21,25 @@ public class Scheduler {
     )
 
     private Integer id;
-    private Date startDate;
-    private Date endDate;
-    @ManyToOne
-    @JoinColumn(name = "course_id")
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "course_id", referencedColumnName = "id")
     private Course course;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
 
     public Scheduler() {
         this.id = 1;
-        this.startDate = new Date();
-        this.endDate = new Date();
+        this.startDate = LocalDateTime.now();
+        this.endDate = LocalDateTime.now();
     }
 
-    public Scheduler(Date startDate, Date endDate, User user, Course course) {
+    public Scheduler(LocalDateTime startDate, LocalDateTime endDate, User user, Course course) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -51,19 +55,19 @@ public class Scheduler {
         this.id = id;
     }
 
-    public Date getstartDate() {
+    public LocalDateTime getstartDate() {
         return startDate;
     }
 
-    public void setstartDate(Date startDate) {
+    public void setstartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public Date getendDate() {
+    public LocalDateTime getendDate() {
         return endDate;
     }
 
-    public void setendDate(Date endDate) {
+    public void setendDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 
@@ -73,6 +77,13 @@ public class Scheduler {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
