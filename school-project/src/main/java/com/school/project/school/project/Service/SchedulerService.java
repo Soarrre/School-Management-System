@@ -30,11 +30,7 @@ public class SchedulerService {
         return courseRepository.findAll();
     }
 
-<<<<<<< HEAD
     public List<Scheduler> getSchedule() {
-=======
-    public List<Scheduler> get() {
->>>>>>> master
         return schedulerRepository.findAll();
     }
 
@@ -44,17 +40,15 @@ public class SchedulerService {
 
     public void add(SchedulerInsertRequest dto) {
 
-<<<<<<< HEAD
-        Scheduler overlappingScheduler = schedulerRepository.findByStartDateOrEndDate(dto.startDate, dto.endDate)
-                                                            .orElseThrow( () -> new IllegalStateException("scheduler incepand la aceasta ora deja exista"));
-=======
-        if (dbScheduler != null) {
-            throw new IllegalStateException(("nu exista acest curs"));
+        boolean overlappingScheduler = schedulerRepository.findByStartDateOrEndDate(dto.startDate, dto.endDate).isPresent();
+        if(overlappingScheduler){
+            throw new IllegalStateException("scheduler incepand la aceasta ora deja exista");
         }
->>>>>>> master
 
-        Scheduler existingUserAtCourse = schedulerRepository.findByUserIdAndCourseId(dto.userId, dto.courseId)
-                                                            .orElseThrow(() -> new IllegalStateException("user deja in curs"));
+        boolean existingUserAtCourse = schedulerRepository.findByUserIdAndCourseId(dto.userId, dto.courseId).isPresent();
+        if(existingUserAtCourse){
+            throw new IllegalStateException("user deja in curs");
+        }
 
         User dbUser = userRepository.findUserById(dto.userId).get();
         Course dbCourse = courseRepository.findById(dto.courseId).get();
@@ -69,38 +63,8 @@ public class SchedulerService {
         if (!exists) {
             throw new IllegalStateException("scheduler with id" + schedulerId + " does not exist");
         }
-<<<<<<< HEAD
     }
 
-=======
-
-        User dbUser = userRepository.findUserById(dto.userId).get();
-
-        if (dbUser != null) {
-            throw new IllegalStateException(("exista user"));
-        }
-        Optional<User> userById = userRepository.findById(dbUser.getId());
-        if (userById.isPresent()) {
-            throw new IllegalStateException("user exista deja in scheduler");
-        }
-        Course dbCourse = courseRepository.findCourseById(dto.courseId).get();
-        if (dbCourse != null) {
-            throw new IllegalStateException(("exista cursuri"));
-        }
-        Optional<Course> courseById = courseRepository.findById(dbCourse.getId());
-        throw new IllegalStateException(("curs exista deja in scheduler"));
-    }
-
-    //  schedulerRepository.save();
-    public void delete(Integer schedulerId) {
-        schedulerRepository.findById(schedulerId);
-        boolean exists = schedulerRepository.existsById(schedulerId);
-        if (!exists) {
-            throw new IllegalStateException("scheduler with id" + schedulerId + " does not exist");
-        }
-    }
-
->>>>>>> master
   /*  @Transactional
     public void update(Integer schedulerId, SchedulerUpdateRequest request) {
         Scheduler scheduler = schedulerRepository.findById(schedulerId).orElseThrow(() -> new IllegalStateException("course with id" + schedulerId + "does not exist"));

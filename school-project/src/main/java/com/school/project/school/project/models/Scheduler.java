@@ -1,7 +1,7 @@
 package com.school.project.school.project.models;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.util.Date;
 
