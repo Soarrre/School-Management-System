@@ -18,7 +18,6 @@ public class SchedulerController {
     public SchedulerController(SchedulerService schedulerService) {
         this.schedulerService = schedulerService;
     }
-
     @GetMapping(produces = {"application/json"})
     public Scheduler getScheduler(Integer schedulerId) {
         return schedulerService.getById(schedulerId);
@@ -34,11 +33,9 @@ public class SchedulerController {
     public void deleteScheduler(@PathVariable("schedulerId") Integer schedulerId) {
         schedulerService.delete(schedulerId);
     }
-
-    @PutMapping(path = "{schedulerId}")
+   @PutMapping(path = "{schedulerId}")
     public void updateScheduler(@PathVariable("schedulerId") Integer schedulerId, @RequestBody SchedulerUpdateRequest request) {
         schedulerService.update(schedulerId, request);
     }
-    
 
 }

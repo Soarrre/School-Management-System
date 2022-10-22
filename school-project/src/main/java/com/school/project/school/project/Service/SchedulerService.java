@@ -12,15 +12,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 @Service
 public class SchedulerService {
     private final SchedulerRepository schedulerRepository;
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
 
     @Autowired
     public SchedulerService(SchedulerRepository schedulerRepository, CourseRepository courseRepository, UserRepository userRepository) {
@@ -44,12 +45,12 @@ public class SchedulerService {
     public void add(SchedulerInsertRequest dto) {
 
         boolean overlappingScheduler = schedulerRepository.findByStartDateOrEndDate(dto.startDate, dto.endDate).isPresent();
-        if(overlappingScheduler){
+        if (overlappingScheduler) {
             throw new IllegalStateException("scheduler incepand la aceasta ora deja exista");
         }
 
         boolean existingUserAtCourse = schedulerRepository.findByUserIdAndCourseId(dto.userId, dto.courseId).isPresent();
-        if(existingUserAtCourse){
+        if (existingUserAtCourse) {
             throw new IllegalStateException("user deja in curs");
         }
 
@@ -71,7 +72,18 @@ public class SchedulerService {
     @Transactional
     public void update(Integer schedulerId, SchedulerUpdateRequest request) {
         Scheduler scheduler = schedulerRepository.findById(schedulerId).orElseThrow(() -> new IllegalStateException("scheduler with id" + schedulerId + "does not exist"));
-       }
+
+        boolean overlappingScheduler = schedulerRepository.findByStartDateOrEndDate(startDate, endDate).isPresent();
+        if (overlappingScheduler) {
+            throw new IllegalStateException("scheduler incepand la aceasta ora deja exista");
+        } else {
+
+            scheduler.setstartDate(request.startDate);
+            scheduler.setendDate(request.endDate);
+
+        }
+    }
+
 
 }
 
