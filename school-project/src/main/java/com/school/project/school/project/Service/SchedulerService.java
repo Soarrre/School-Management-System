@@ -4,13 +4,16 @@ import com.school.project.school.project.models.Course;
 import com.school.project.school.project.models.Scheduler;
 import com.school.project.school.project.models.User;
 import com.school.project.school.project.models.dto.SchedulerInsertRequest;
+import com.school.project.school.project.models.dto.SchedulerUpdateRequest;
 import com.school.project.school.project.repository.CourseRepository;
 import com.school.project.school.project.repository.SchedulerRepository;
 import com.school.project.school.project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -65,14 +68,10 @@ public class SchedulerService {
         }
     }
 
-  /*  @Transactional
+    @Transactional
     public void update(Integer schedulerId, SchedulerUpdateRequest request) {
-        Scheduler scheduler = schedulerRepository.findById(schedulerId).orElseThrow(() -> new IllegalStateException("course with id" + schedulerId + "does not exist"));
-        if (request.startDate != null && request.startDate != 0 && !Objects.equals(scheduler.getstartDate(), request.startDate)) {
-            scheduler.setstartDate(request.startDate);
-
-        }
+        Scheduler scheduler = schedulerRepository.findById(schedulerId).orElseThrow(() -> new IllegalStateException("scheduler with id" + schedulerId + "does not exist"));
        }
-   */
+
 }
 
